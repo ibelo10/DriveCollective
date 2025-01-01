@@ -3,335 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drive Collective LLC - Premium Car Rentals</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --light: #f8f9fa;
-            --dark: #1a1a1a;
-        }
-
-        /* Header and Navigation */
-        .header {
-            background-color: rgba(44, 62, 80, 0.95);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
-
-        .logo {
-            color: var(--light);
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary);
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-                        url('/api/placeholder/1920/1080');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--light);
-        }
-
-        .hero-content {
-            max-width: 800px;
-            padding: 0 2rem;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.2s;
-            opacity: 0;
-            animation-fill-mode: forwards;
-        }
-
-        /* Featured Cars Section */
-        .featured-cars {
-            padding: 5rem 2rem;
-            background-color: var(--light);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--dark);
-            font-size: 2.5rem;
-        }
-
-        .cars-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .car-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .car-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .car-image {
-            width: 100%;
-            height: 200px;
-            background: var(--secondary);
-            object-fit: cover;
-        }
-
-        .car-details {
-            padding: 1.5rem;
-        }
-
-        .car-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-
-        .car-price {
-            color: var(--accent);
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .book-button {
-            background-color: var(--accent);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .book-button:hover {
-            background-color: #c0392b;
-        }
-
-        /* Why Choose Us Section */
-        .features {
-            padding: 5rem 2rem;
-            background-color: white;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .feature-card {
-            text-align: center;
-            padding: 2rem;
-            background-color: var(--light);
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Footer */
-        .footer {
-            background-color: var(--primary);
-            color: var(--light);
-            padding: 3rem 2rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
+    <title>Drive Collective - Premium Car Rentals</title>
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <header class="header">
-        <nav class="nav-container">
-            <a href="#" class="logo">Drive Collective</a>
-            <div class="nav-links">
-                <a href="#featured">Our Fleet</a>
-                <a href="#features">Why Us</a>
-                <a href="#contact">Contact</a>
-                <a href="#book" class="book-button">Book Now</a>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="#" class="logo">Drive Collective</a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="nav-menu">
+                    <select id="locationSelect" class="location-select">
+                        <option value="las-vegas">Las Vegas, NV</option>
+                        <option value="south-dakota">South Dakota</option>
+                    </select>
+                    <a href="#fleet">Our Fleet</a>
+                    <a href="#features">Why Us</a>
+                    <a href="#investors">Investors</a>
+                    <a href="#contact">Contact</a>
+                    <button class="btn-primary">Book Now</button>
+                </div>
             </div>
         </nav>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Premium Car Rentals</h1>
-            <p>Experience luxury and performance with our exclusive fleet of premium vehicles</p>
-            <a href="#featured" class="book-button">Explore Our Fleet</a>
-        </div>
-    </section>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Premium Car Rentals</h1>
+                <p>Serving rideshare drivers and tourists with reliable, affordable vehicles</p>
+                <button class="btn-primary">View Available Vehicles</button>
+            </div>
+        </section>
 
-    <section id="featured" class="featured-cars">
-        <h2 class="section-title">Featured Vehicles</h2>
-        <div class="cars-grid">
-            <div class="car-card">
-                <img src="/api/placeholder/400/200" alt="Luxury Sedan" class="car-image">
-                <div class="car-details">
-                    <h3 class="car-title">Luxury Sedan</h3>
-                    <p class="car-price">From $199/day</p>
-                    <a href="#book" class="book-button">Book Now</a>
+        <section id="fleet" class="fleet">
+            <h2>Our Fleet</h2>
+            <div class="car-grid" id="carGrid">
+                <!-- Cars will be populated via JavaScript -->
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2>Why Choose Us</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">🚗</div>
+                    <h3>Premium Fleet</h3>
+                    <p>Well-maintained vehicles perfect for rideshare and tourism</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🕒</div>
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock customer assistance</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🛡️</div>
+                    <h3>Fully Insured</h3>
+                    <p>Comprehensive coverage for peace of mind</p>
                 </div>
             </div>
-            <div class="car-card">
-                <img src="/api/placeholder/400/200" alt="Sports Car" class="car-image">
-                <div class="car-details">
-                    <h3 class="car-title">Sports Car</h3>
-                    <p class="car-price">From $299/day</p>
-                    <a href="#book" class="book-button">Book Now</a>
+        </section>
+
+        <section id="investors" class="investors">
+            <h2>Investment Opportunity</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3>Year 1 Revenue</h3>
+                    <div class="metric-value">$78,000</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Year 2 Revenue</h3>
+                    <div class="metric-value">$156,000</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Net Margin</h3>
+                    <div class="metric-value">30%</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Break-Even</h3>
+                    <div class="metric-value">Month 14</div>
                 </div>
             </div>
-            <div class="car-card">
-                <img src="/api/placeholder/400/200" alt="SUV" class="car-image">
-                <div class="car-details">
-                    <h3 class="car-title">Luxury SUV</h3>
-                    <p class="car-price">From $249/day</p>
-                    <a href="#book" class="book-button">Book Now</a>
+
+            <div class="highlights-grid">
+                <div class="highlight-card">
+                    <h3>Market Opportunity</h3>
+                    <p>Targeting $39.7B combined market in Las Vegas and South Dakota tourism/rideshare sectors</p>
+                </div>
+                <div class="highlight-card">
+                    <h3>Proven Model</h3>
+                    <p>Hybrid platform approach combining established marketplace (Turo) with proprietary booking system</p>
+                </div>
+                <div class="highlight-card">
+                    <h3>Strong Returns</h3>
+                    <p>Projected 85% ROI by Year 2 with clear path to profitability</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section id="features" class="features">
-        <h2 class="section-title">Why Choose Us</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>Premium Fleet</h3>
-                <p>Latest models of luxury and performance vehicles</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Q1 2025</h4>
+                    <p>Initial Fleet Launch<br>Platform Development</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Q2 2025</h4>
+                    <p>Market Expansion<br>Partnership Development</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Q3 2025</h4>
+                    <p>Platform Launch<br>Fleet Expansion</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Q4 2025</h4>
+                    <p>Market Optimization<br>Scale Operations</p>
+                </div>
             </div>
-            <div class="feature-card">
-                <h3>24/7 Support</h3>
-                <p>Round-the-clock customer service</p>
-            </div>
-            <div class="feature-card">
-                <h3>Flexible Rentals</h3>
-                <p>Daily, weekly, and monthly options</p>
-            </div>
-        </div>
-    </section>
 
-    <footer class="footer">
+            <div class="investment-structure">
+                <div class="structure-grid">
+                    <div class="structure-card">
+                        <h3>Use of Funds</h3>
+                        <ul>
+                            <li>Vehicle Acquisition: $60,000</li>
+                            <li>Operations Setup: $10,000</li>
+                            <li>Technology Investment: $15,000</li>
+                            <li>Marketing Launch: $5,000</li>
+                        </ul>
+                    </div>
+                    <div class="structure-card">
+                        <h3>Return Potential</h3>
+                        <ul>
+                            <li>Year 1 ROI: 31%</li>
+                            <li>Year 2 ROI: 85%</li>
+                            <li>Exit Multiple: 2.5-3x EBITDA</li>
+                            <li>Projected Exit Value: $250,000</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="investment-cta">
+                <h3>Investment Opportunity</h3>
+                <p>Seeking $75,000 in exchange for 30% equity stake</p>
+                <button class="btn-primary">Contact for Investment Details</button>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Contact Us</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="icon">📱</div>
+                    <h3>Phone</h3>
+                    <p>(555) 123-4567</p>
+                </div>
+                <div class="contact-card">
+                    <div class="icon">📧</div>
+                    <h3>Email</h3>
+                    <p>info@drivecollective.com</p>
+                </div>
+                <div class="contact-card" id="locationAddress">
+                    <div class="icon">📍</div>
+                    <h3>Location</h3>
+                    <p>Las Vegas, NV</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Contact Us</h3>
-                <p>Email: info@drivecollective.com</p>
-                <p>Phone: (555) 123-4567</p>
-            </div>
-            <div class="footer-section">
-                <h3>Location</h3>
-                <p>123 Luxury Drive</p>
-                <p>Beverly Hills, CA 90210</p>
+                <h3>Drive Collective LLC</h3>
+                <p>Premium car rentals for rideshare and tourism</p>
             </div>
             <div class="footer-section">
                 <h3>Hours</h3>
                 <p>Mon-Fri: 9:00 AM - 8:00 PM</p>
                 <p>Sat-Sun: 10:00 AM - 6:00 PM</p>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">Instagram</a>
+                </div>
             </div>
         </div>
         <div class="footer-bottom">
@@ -339,26 +201,6 @@
         </div>
     </footer>
 
-    <script>
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (window.scrollY > 100) {
-                header.style.backgroundColor = 'rgba(26, 26, 26, 0.95)';
-            } else {
-                header.style.backgroundColor = 'rgba(44, 62, 80, 0.95)';
-            }
-        });
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
