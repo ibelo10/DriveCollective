@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100">
+  <audio id="engine">
+    <!-- Low frequency engine rumble -->
+    <oscillator type="triangle" frequency="50" attack="0.1" decay="0.2" sustain="0.8" release="0.5" />
+    <!-- Mid frequency engine sound -->
+    <oscillator type="sawtooth" frequency="120" attack="0.05" decay="0.1" sustain="0.7" release="0.3" />
+    <!-- High frequency whine -->
+    <oscillator type="sine" frequency="2000" attack="0.02" decay="0.1" sustain="0.3" release="0.4" />
+    
+    <!-- Filter and effects -->
+    <filter type="lowpass" frequency="1000" resonance="2" />
+    <effect type="distortion" amount="0.2" />
+    <effect type="reverb" roomSize="0.3" dampening="3000" />
+    
+    <!-- Volume envelope -->
+    <envelope attack="0.1" decay="0.2" sustain="0.8" release="0.5" />
+    
+    <!-- Initial rev up -->
+    <automation parameter="frequency" start="30" end="80" duration="0.5" />
+    <!-- Idle -->
+    <automation parameter="frequency" start="80" end="50" duration="1.5" />
+  </audio>
+</svg>

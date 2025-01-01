@@ -175,23 +175,174 @@ const locations = {
     }
 };
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Cache DOM elements
-    const locationSelect = document.getElementById('locationSelect');
-    const carGrid = document.getElementById('carGrid');
-    const locationAddress = document.getElementById('locationAddress');
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.querySelector('.nav-menu');
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    
-    // Mobile Navigation Toggle
-    navToggle?.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-    });
+// Class to handle intro page functionality
+class IntroPage {
+    constructor() {
+        this.engineSound = document.getElementById('engine-sound');
+        this.video = document.getElementById('intro-video');
+        this.audioPlayed = false;
+        this.initializeIntro();
+    }
 
-    // Create card HTML helper function
-    function createCarCard(car) {
+    initializeIntro() {
+        if (this.video) this.initVideo();
+        if (this.engineSound) this.initAudio();
+    }
+
+    initVideo() {
+        const playPromise = this.video.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log('Video autoplay prevented:', error);
+                this.video.addEventListener('canplay', () => {
+                    this.video.play().catch(e => console.log('Video play failed:', e));
+                });
+            });
+        }
+
+        this.video.addEventListener('ended', () => {
+            this.video.play().catch(e => console.log('Video loop failed:', e));
+        });
+    }
+
+    initAudio() {
+        if (!this.audioPlayed && this.engineSound.readyState >= 2) {
+            this.engineSound.volume = 0.5;
+            const playPromise = this.engineSound.play();
+
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        this.audioPlayed = true;
+                        this.fadeInAudio();
+                    })
+                    .catch(error => {
+                        console.log('Audio autoplay prevented:', error);
+                        document.addEventListener('click', () => this.playAudioOnce());
+                        document.addEventListener('touchstart', () => this.playAudioOnce());
+                    });
+            }
+        }
+    }
+
+    fadeInAudio() {
+        let vol = 0;
+        const fadeIn = setInterval(() => {
+            if (vol < 0.7) {
+                vol += 0.1;
+                this.engineSound.volume = vol;
+            } else {
+                clearInterval(fadeIn);
+            }
+        }, 100);
+    }
+
+    fadeOutAudio() {
+        let vol = this.engineSound.volume;
+        const fadeOut = setInterval(() => {
+            if (vol > 0) {
+                vol -= 0.1;
+                this.engineSound.volume = vol;
+            } else {
+                clearInterval(fadeOut);
+                this.engineSound.pause();
+                this.engineSound.currentTime = 0;
+            }
+        }, 50);
+    }
+
+    playAudioOnce() {
+        if (!this.audioPlayed) {
+            this.initAudio();
+            document.removeEventListener('click', () => this.playAudioOnce());
+            document.removeEventListener('touchstart', () => this.playAudioOnce());
+        }
+    }
+
+    toggleAudio() {
+        if (this.engineSound.paused) {
+            this.engineSound.volume = 0;
+            this.engineSound.play()
+                .then(() => {
+                    this.audioPlayed = true;
+                    this.fadeInAudio();
+                })
+                .catch(e => console.log('Toggle failed:', e));
+        } else {
+            this.fadeOutAudio();
+        }
+    }
+}
+
+// Class to handle main site functionality
+class MainSite {
+    constructor() {
+        this.locationSelect = document.getElementById('locationSelect');
+        this.carGrid = document.getElementById('carGrid');
+        this.locationAddress = document.getElementById('locationAddress');
+        this.navToggle = document.getElementById('navToggle');
+        this.navMenu = document.querySelector('.nav-menu');
+        this.filterButtons = document.querySelectorAll('.filter-btn');
+        this.initializeMainSite();
+    }
+
+    initializeMainSite() {
+        this.setupEventListeners();
+        this.setupIntersectionObserver();
+        this.updateLocation('las-vegas');
+    }
+
+    setupEventListeners() {
+        // Mobile Navigation
+        this.navToggle?.addEventListener('click', () => {
+            this.navMenu.classList.toggle('active');
+        });
+
+        // Location Change
+        this.locationSelect?.addEventListener('change', (e) => {
+            this.updateLocation(e.target.value);
+        });
+
+        // Filters
+        this.filterButtons?.forEach(button => {
+            button.addEventListener('click', () => {
+                this.filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                this.handleFilter(button.dataset.filter);
+            });
+        });
+
+        // Investment CTA
+        const investmentCTA = document.querySelector('.investment-cta .btn-primary');
+        investmentCTA?.addEventListener('click', () => {
+            const contactSection = document.getElementById('contact');
+            contactSection?.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+
+    setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.metric-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+    }
+
+    createCarCard(car) {
         return `
             <div class="car-card" data-tags="${car.tags.join(' ')}">
                 <div class="car-image">
@@ -205,10 +356,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         '<div class="rideshare-badge"><svg class="rideshare-icon" width="20" height="20"><use href="#icon-rideshare"></use></svg>Rideshare Ready</div>' 
                         : ''}
                 </div>
-                
                 <div class="car-details">
                     <h3 class="car-title">${car.name}</h3>
-                    
                     <div class="car-specs">
                         ${Object.entries(car.specifications).map(([key, value]) => `
                             <div class="spec-item">
@@ -219,18 +368,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         `).join('')}
                     </div>
-
                     <div class="car-features">
                         ${car.features.slice(0, 4).map(feature => 
                             `<span class="feature-tag">${feature}</span>`
                         ).join('')}
                     </div>
-
                     <div class="car-price">
                         <span class="amount">$${car.price}</span>
                         <span class="period">/day</span>
                     </div>
-
                     <div class="car-guidelines">
                         <h4>Trip Guidelines</h4>
                         <ul>
@@ -239,7 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             ).join('')}
                         </ul>
                     </div>
-
                     <div class="car-extras">
                         <h4>Available Extras</h4>
                         ${car.extras.map(extra => `
@@ -249,7 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         `).join('')}
                     </div>
-
                     <div class="car-actions">
                         <button class="btn-primary">Book Now</button>
                         <button class="btn-secondary">View Details</button>
@@ -259,26 +403,22 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    // Update location content
-    function updateLocation(location) {
+    updateLocation(location) {
         const locationData = locations[location];
         
-        // Update car grid
-        if (carGrid) {
-            carGrid.innerHTML = locationData.cars.map(createCarCard).join('');
+        if (this.carGrid) {
+            this.carGrid.innerHTML = locationData.cars.map(car => this.createCarCard(car)).join('');
         }
 
-        // Update location address
-        if (locationAddress) {
-            const addressText = locationAddress.querySelector('p');
+        if (this.locationAddress) {
+            const addressText = this.locationAddress.querySelector('p');
             if (addressText) {
                 addressText.textContent = locationData.address;
             }
         }
     }
 
-    // Filter functionality
-    function handleFilter(filter) {
+    handleFilter(filter) {
         const cards = document.querySelectorAll('.car-card');
         cards.forEach(card => {
             const tags = card.dataset.tags;
@@ -286,49 +426,93 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Event Listeners
-    locationSelect?.addEventListener('change', (e) => {
-        updateLocation(e.target.value);
-    });
-
-    filterButtons?.forEach(button => {
-        button.addEventListener('click', () => {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            handleFilter(button.dataset.filter);
+    attachBookingHandlers() {
+        // Attach handlers to booking buttons
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const carCard = e.target.closest('.car-card');
+                if (carCard) {
+                    const carName = carCard.querySelector('.car-title').textContent;
+                    this.handleBooking(carName);
+                }
+            });
         });
-    });
 
-    // Investment CTA functionality
-    const investmentCTA = document.querySelector('.investment-cta .btn-primary');
-    investmentCTA?.addEventListener('click', () => {
-        const contactSection = document.getElementById('contact');
-        contactSection?.scrollIntoView({ behavior: 'smooth' });
-    });
+        // Attach handlers to view details buttons
+        document.querySelectorAll('.btn-secondary').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const carCard = e.target.closest('.car-card');
+                if (carCard) {
+                    const carName = carCard.querySelector('.car-title').textContent;
+                    this.showCarDetails(carName);
+                }
+            });
+        });
+    }
 
-    // Metrics animation
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
+    handleBooking(carName) {
+        // TODO: Implement booking functionality
+        console.log(`Booking ${carName}`);
+    }
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+    showCarDetails(carName) {
+        // TODO: Implement car details modal
+        console.log(`Showing details for ${carName}`);
+    }
+}
+
+// Handle smooth scrolling for all anchor links
+function setupSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
-    }, observerOptions);
-
-    document.querySelectorAll('.metric-card').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        observer.observe(card);
     });
+}
 
-    // Initialize with default location
-    updateLocation('las-vegas');
+// Initialize based on current page
+document.addEventListener('DOMContentLoaded', () => {
+    // Determine if we're on the intro page or main site
+    const isIntroPage = document.querySelector('.video-container') !== null;
+    
+    // Setup smooth scrolling for both pages
+    setupSmoothScroll();
+
+    if (isIntroPage) {
+        // Initialize intro page
+        window.introPage = new IntroPage();
+        // Make toggleAudio available globally for the button
+        window.toggleAudio = () => window.introPage.toggleAudio();
+    } else {
+        // Initialize main site
+        window.mainSite = new MainSite();
+    }
+
+    // Handle navigation state
+    const handleNavState = () => {
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+    };
+
+    // Add scroll event listener for navbar state
+    window.addEventListener('scroll', handleNavState);
+    
+    // Handle initial navbar state
+    handleNavState();
 });
+
+// Export for module usage
+export { IntroPage, MainSite };
