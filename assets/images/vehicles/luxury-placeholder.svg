@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <!-- Background -->
+  <rect width="400" height="200" fill="#f8f9fa"/>
+  
+  <!-- Car body -->
+  <path d="M30 120 L90 120 L120 70 L280 70 L310 120 L370 120 L370 150 L30 150 Z" 
+        fill="#2c3e50"/>
+  
+  <!-- Windows -->
+  <path d="M130 75 L150 45 L250 45 L270 75" 
+        fill="#3498db"/>
+  
+  <!-- Wheels -->
+  <circle cx="110" cy="150" r="30" fill="#2c3e50"/>
+  <circle cx="290" cy="150" r="30" fill="#2c3e50"/>
+  <circle cx="110" cy="150" r="15" fill="#95a5a6"/>
+  <circle cx="290" cy="150" r="15" fill="#95a5a6"/>
+  
+  <!-- Details -->
+  <rect x="140" y="90" width="120" height="10" fill="#3498db"/>
+  <rect x="60" y="130" width="40" height="5" fill="#95a5a6"/>
+  <rect x="300" y="130" width="40" height="5" fill="#95a5a6"/>
+  
+  <!-- Luxury details -->
+  <rect x="150" y="105" width="100" height="3" fill="#e74c3c"/>
+  <circle cx="200" cy="95" r="10" fill="#e74c3c"/>
+</svg>
