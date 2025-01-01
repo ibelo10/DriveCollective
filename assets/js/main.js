@@ -86,17 +86,94 @@ const locations = {
         ],
         address: 'Las Vegas, NV'
     },
-    // ... rest of the locations data
-};
-    'south-dakota'; {
+    'south-dakota': {
         cars: [
-            { id: 4, name: 'Full-Size SUV', price: 149, image: 'https://placehold.co/400x200', tags: ['tourist'] },
-            { id: 5, name: 'Economy Sedan', price: 89, image: 'https://placehold.co/400x200', tags: ['rideshare'] },
-            { id: 6, name: 'Premium SUV', price: 179, image: 'https://placehold.co/400x200', tags: ['tourist'] }
+            {
+                id: 4,
+                name: 'Ford Explorer 2024',
+                image: 'https://placehold.co/400x200',
+                price: 149,
+                rating: 4.7,
+                trips: 45,
+                features: ['Third Row Seating', '4WD', 'Roof Rack', 'Towing Package'],
+                specifications: {
+                    mpg: '24 combined',
+                    doors: 4,
+                    seats: 7,
+                    fuelType: 'Gas'
+                },
+                tags: ['tourist'],
+                guidelines: [
+                    'No smoking',
+                    'Pet friendly',
+                    'Clean car upon return',
+                    'Replace fuel used'
+                ],
+                extras: [
+                    { name: 'Prepaid refuel', price: 65 },
+                    { name: 'Unlimited miles', price: 45 },
+                    { name: 'Post-trip cleaning', price: 40 }
+                ]
+            },
+            {
+                id: 5,
+                name: 'Honda Civic 2024',
+                image: 'https://placehold.co/400x200',
+                price: 89,
+                rating: 4.9,
+                trips: 82,
+                features: ['Bluetooth', 'Apple CarPlay', 'Android Auto', 'Keyless entry'],
+                specifications: {
+                    mpg: '36 combined',
+                    doors: 4,
+                    seats: 5,
+                    fuelType: 'Gas'
+                },
+                tags: ['rideshare'],
+                guidelines: [
+                    'No smoking',
+                    'No pets',
+                    'Clean car upon return',
+                    'Replace fuel used'
+                ],
+                extras: [
+                    { name: 'Prepaid refuel', price: 45 },
+                    { name: 'Unlimited miles', price: 35 },
+                    { name: 'Post-trip cleaning', price: 30 }
+                ]
+            },
+            {
+                id: 6,
+                name: 'Jeep Grand Cherokee 2024',
+                image: 'https://placehold.co/400x200',
+                price: 179,
+                rating: 4.8,
+                trips: 38,
+                features: ['Premium Audio', '4WD', 'Panoramic Roof', 'Advanced Safety Features'],
+                specifications: {
+                    mpg: '22 combined',
+                    doors: 4,
+                    seats: 5,
+                    fuelType: 'Gas'
+                },
+                tags: ['tourist'],
+                guidelines: [
+                    'No smoking',
+                    'Pet friendly with deposit',
+                    'Clean car upon return',
+                    'Replace fuel used'
+                ],
+                extras: [
+                    { name: 'Prepaid refuel', price: 70 },
+                    { name: 'Unlimited miles', price: 50 },
+                    { name: 'Post-trip cleaning', price: 45 },
+                    { name: 'Pet deposit', price: 100 }
+                ]
+            }
         ],
-        address; 'Rapid City, SD'
+        address: 'Rapid City, SD'
     }
-;
+};
 
 // DOM Elements
 const locationSelect = document.getElementById('locationSelect');
@@ -143,7 +220,7 @@ function updateLocation(location) {
                     `).join('')}
                 </div>
 
-                <p class="car-price">${car.price}<span>/day</span></p>
+                <p class="car-price">$${car.price}<span>/day</span></p>
 
                 <div class="car-features">
                     ${car.features.slice(0, 4).map(feature => `
@@ -165,7 +242,7 @@ function updateLocation(location) {
                     ${car.extras.map(extra => `
                         <div class="extra-item">
                             <span>${extra.name}</span>
-                            <span class="extra-price">${extra.price}</span>
+                            <span class="extra-price">$${extra.price}</span>
                         </div>
                     `).join('')}
                 </div>
@@ -186,6 +263,26 @@ locationSelect.addEventListener('change', (e) => {
 
 // Initialize with default location
 updateLocation('las-vegas');
+
+// Add filter functionality
+const filterButtons = document.querySelectorAll('.filter-btn');
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        const cards = document.querySelectorAll('.car-card');
+        cards.forEach(card => {
+            if (filter === 'all') {
+                card.style.display = 'block';
+            } else {
+                const tags = card.querySelector('.car-features').textContent.toLowerCase();
+                card.style.display = tags.includes(filter) ? 'block' : 'none';
+            }
+        });
+    });
+});
 
 // Investment CTA Button Handler
 document.querySelector('.investment-cta .btn-primary').addEventListener('click', () => {
