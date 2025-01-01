@@ -1,0 +1,139 @@
+/* brochure.css */
+.brochure-page {
+    background-color: var(--gray-100);
+}
+
+.brochure-header {
+    background-color: var(--primary);
+    color: white;
+    padding: 6rem 0 3rem;
+    text-align: center;
+}
+
+.brochure-header h1 {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.lead {
+    font-size: 1.5rem;
+    opacity: 0.9;
+}
+
+.brochure-content section {
+    padding: 4rem 0;
+}
+
+.summary-grid,
+.financial-grid,
+.market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.summary-card,
+.financial-card,
+.market-card {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.projections {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+
+.year {
+    text-align: center;
+}
+
+.amount {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.metrics-list {
+    list-style: none;
+    padding: 0;
+}
+
+.metrics-list li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.metrics-list li:last-child {
+    border-bottom: none;
+}
+
+.market-segments {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.segment ul {
+    list-style: none;
+    padding: 0;
+}
+
+.segment li {
+    margin: 0.5rem 0;
+    color: var(--gray-700);
+}
+
+.contact-section {
+    background: white;
+    text-align: center;
+}
+
+.contact-details {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-info {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: var(--gray-100);
+    border-radius: var(--radius-md);
+}
+
+.contact-info p {
+    margin: 0.5rem 0;
+}
+
+.contact-info a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+    color: var(--secondary);
+}
+
+@media (max-width: 768px) {
+    .brochure-header {
+        padding: 4rem 0 2rem;
+    }
+
+    .brochure-header h1 {
+        font-size: 2rem;
+    }
+
+    .lead {
+        font-size: 1.25rem;
+    }
+
+    .market-segments {
+        grid-template-columns: 1fr;
+    }
+}
