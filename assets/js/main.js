@@ -181,48 +181,170 @@ class IntroPage {
         this.engineSound = document.getElementById('engine-sound');
         this.video = document.getElementById('intro-video');
         this.audioPlayed = false;
+        this.isVideoPlaying = false;
+        this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        // Ensure video is muted and playsinline for mobile
+        if (this.video) {
+            this.video.muted = true;
+            this.video.setAttribute('playsinline', '');
+            this.video.setAttribute('webkit-playsinline', '');
+        }
+        
         this.initializeIntro();
     }
 
-    initializeIntro() {
-        if (this.video) this.initVideo();
+    async initializeIntro() {
+        if (this.video) {
+            // Load video first
+            await this.loadVideo();
+            // Then try to play
+            await this.playVideo();
+        }
         if (this.engineSound) this.initAudio();
     }
 
-    initVideo() {
-        const playPromise = this.video.play();
-        if (playPromise !== undefined) {
-            playPromise.catch(error => {
-                console.log('Video autoplay prevented:', error);
-                this.video.addEventListener('canplay', () => {
-                    this.video.play().catch(e => console.log('Video play failed:', e));
-                });
-            });
-        }
-
-        this.video.addEventListener('ended', () => {
-            this.video.play().catch(e => console.log('Video loop failed:', e));
+    async loadVideo() {
+        return new Promise((resolve) => {
+            if (this.video.readyState >= 2) {
+                resolve();
+            } else {
+                this.video.addEventListener('loadeddata', () => resolve());
+                this.video.load();
+            }
         });
     }
 
-    initAudio() {
-        if (!this.audioPlayed && this.engineSound.readyState >= 2) {
-            this.engineSound.volume = 0.5;
-            const playPromise = this.engineSound.play();
-
-            if (playPromise !== undefined) {
-                playPromise
-                    .then(() => {
-                        this.audioPlayed = true;
-                        this.fadeInAudio();
-                    })
-                    .catch(error => {
-                        console.log('Audio autoplay prevented:', error);
-                        document.addEventListener('click', () => this.playAudioOnce());
-                        document.addEventListener('touchstart', () => this.playAudioOnce());
-                    });
+    async playVideo() {
+        try {
+            // Try immediate autoplay
+            await this.video.play();
+            this.isVideoPlaying = true;
+            console.log('Video autoplayed successfully');
+        } catch (error) {
+            console.log('Autoplay prevented:', error);
+            
+            // Add play UI for mobile
+            if (this.isMobile) {
+                this.addPlayButton();
+            } else {
+                // For desktop, try on user interaction
+                this.addInteractionPlayHandler();
             }
         }
+    }
+
+    addPlayButton() {
+        // Create a play button overlay
+        const playButton = document.createElement('button');
+        playButton.className = 'video-play-button';
+        playButton.innerHTML = `
+            <svg viewBox="0 0 24 24" width="64" height="64">
+                <circle cx="12" cy="12" r="11" fill="rgba(0,0,0,0.5)" stroke="#fff" stroke-width="2"/>
+                <path d="M9.5 7.5v9l7-4.5-7-4.5z" fill="#fff"/>
+            </svg>
+        `;
+        
+        // Add styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .video-play-button {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 1000;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 0;
+                opacity: 0.8;
+                transition: opacity 0.3s;
+            }
+            .video-play-button:hover {
+                opacity: 1;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add click handler
+        playButton.addEventListener('click', async () => {
+            try {
+                await this.video.play();
+                this.isVideoPlaying = true;
+                playButton.remove();
+            } catch (error) {
+                console.error('Play failed:', error);
+            }
+        });
+
+        document.body.appendChild(playButton);
+    }
+
+    addInteractionPlayHandler() {
+        const playOnInteraction = async () => {
+            try {
+                await this.video.play();
+                this.isVideoPlaying = true;
+                document.removeEventListener('click', playOnInteraction);
+                document.removeEventListener('touchstart', playOnInteraction);
+            } catch (error) {
+                console.error('Play attempt failed:', error);
+            }
+        };
+
+        document.addEventListener('click', playOnInteraction);
+        document.addEventListener('touchstart', playOnInteraction);
+    }
+
+    initAudio() {
+        // Ensure audio is loaded
+        this.engineSound.load();
+        
+        // Only try to play audio after video has started
+        if (this.isVideoPlaying) {
+            this.playAudio();
+        } else {
+            // Wait for video to play before attempting audio
+            this.video.addEventListener('play', () => {
+                this.playAudio();
+            });
+        }
+    }
+
+    async playAudio() {
+        if (!this.audioPlayed && this.engineSound.readyState >= 2) {
+            try {
+                this.engineSound.volume = 0;
+                await this.engineSound.play();
+                this.audioPlayed = true;
+                this.fadeInAudio();
+            } catch (error) {
+                console.log('Audio autoplay prevented:', error);
+                // Enable play on user interaction
+                if (this.isMobile) {
+                    // On mobile, rely on the audio toggle button
+                    console.log('Use audio button to enable sound');
+                } else {
+                    this.addInteractionAudioHandler();
+                }
+            }
+        }
+    }
+
+    addInteractionAudioHandler() {
+        const playAudioOnInteraction = async () => {
+            try {
+                await this.playAudio();
+                document.removeEventListener('click', playAudioOnInteraction);
+                document.removeEventListener('touchstart', playAudioOnInteraction);
+            } catch (error) {
+                console.error('Audio play attempt failed:', error);
+            }
+        };
+
+        document.addEventListener('click', playAudioOnInteraction);
+        document.addEventListener('touchstart', playAudioOnInteraction);
     }
 
     fadeInAudio() {
@@ -251,14 +373,6 @@ class IntroPage {
         }, 50);
     }
 
-    playAudioOnce() {
-        if (!this.audioPlayed) {
-            this.initAudio();
-            document.removeEventListener('click', () => this.playAudioOnce());
-            document.removeEventListener('touchstart', () => this.playAudioOnce());
-        }
-    }
-
     toggleAudio() {
         if (this.engineSound.paused) {
             this.engineSound.volume = 0;
@@ -273,6 +387,8 @@ class IntroPage {
         }
     }
 }
+
+export { IntroPage };
 
 // Class to handle main site functionality
 class MainSite {
