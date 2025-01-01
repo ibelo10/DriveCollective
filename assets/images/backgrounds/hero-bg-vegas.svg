@@ -1,73 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
   <defs>
-    <!-- Gradients -->
-    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    <linearGradient id="heroGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#3b82f6" />
     </linearGradient>
-    
-    <!-- Neon effect -->
-    <filter id="neonBlue">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
-      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0   0 0 1 0 0   0 0 1 0 0  0 0 0 18 -7" result="neon" />
-      <feComposite in="SourceGraphic" in2="neon" operator="over" />
-    </filter>
-    
-    <!-- Star pattern -->
-    <pattern id="stars" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-      <circle cx="50" cy="50" r="1" fill="white" opacity="0.8" />
-      <circle cx="25" cy="25" r="0.5" fill="white" opacity="0.5" />
-      <circle cx="75" cy="75" r="0.7" fill="white" opacity="0.6" />
-      <circle cx="10" cy="90" r="0.8" fill="white" opacity="0.7" />
-    </pattern>
   </defs>
-
-  <!-- Background -->
-  <rect width="100%" height="100%" fill="url(#skyGradient)" />
-  <rect width="100%" height="100%" fill="url(#stars)" opacity="0.5" />
-
-  <!-- Vegas Skyline -->
-  <g transform="translate(0, 400)" filter="url(#neonBlue)">
-    <!-- Luxor-style pyramid -->
-    <path d="M100 300 L300 0 L500 300" 
-          stroke="#4facfe" 
-          fill="none" 
-          stroke-width="2"/>
-          
-    <!-- High-rise buildings -->
-    <rect x="600" y="100" width="100" height="200" fill="#4facfe" opacity="0.8"/>
-    <rect x="800" y="50" width="80" height="250" fill="#4facfe" opacity="0.8"/>
-    <rect x="1000" y="150" width="120" height="150" fill="#4facfe" opacity="0.8"/>
-    <rect x="1200" y="0" width="90" height="300" fill="#4facfe" opacity="0.8"/>
-    <rect x="1400" y="100" width="100" height="200" fill="#4facfe" opacity="0.8"/>
-    
-    <!-- Stratosphere-style tower -->
-    <path d="M1600 300 L1600 0 M1580 50 L1620 50" 
-          stroke="#4facfe" 
-          stroke-width="3"
-          fill="none"/>
-  </g>
-
-  <!-- Road/Strip -->
-  <path d="M0 800 C500 780, 1400 780, 1920 800" 
-        stroke="#ffd700" 
-        stroke-width="4"
-        fill="none"
-        filter="url(#neonBlue)"/>
-
-  <!-- Decorative lights -->
-  <g filter="url(#neonBlue)">
-    <circle cx="200" cy="200" r="1" fill="white">
-      <animate attributeName="opacity" 
-               values="0;1;0" 
-               dur="3s" 
-               repeatCount="indefinite"/>
-    </circle>
-    <circle cx="1700" cy="300" r="1" fill="white">
-      <animate attributeName="opacity" 
-               values="0;1;0" 
-               dur="2s" 
-               repeatCount="indefinite"/>
-    </circle>
-  </g>
+  <rect width="1920" height="1080" fill="url(#heroGradient)" />
+  <path d="M0 600 Q960 300 1920 600 T3840 600" fill="#ffffff22" />
+  <circle cx="960" cy="540" r="300" fill="#ffffff11" />
 </svg>
