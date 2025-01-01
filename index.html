@@ -11,16 +11,16 @@
 <body>
     <!-- SVG Sprite Sheets -->
     <div style="display: none;">
-        <!-- Include SVG sprite sheets -->
-        <object data="assets/images/sprites/feature-icons.svg" type="image/svg+xml"></object>
-        <object data="assets/images/sprites/contact-icons.svg" type="image/svg+xml"></object>
-        <object data="assets/images/sprites/social-icons.svg" type="image/svg+xml"></object>
+        <object id="featureIcons" data="assets/images/sprites/feature-icons.svg" type="image/svg+xml"></object>
+        <object id="vehicleIcons" data="assets/images/sprites/vehicle-icons.svg" type="image/svg+xml"></object>
+        <object id="contactIcons" data="assets/images/sprites/contact-icons.svg" type="image/svg+xml"></object>
+        <object id="socialIcons" data="assets/images/sprites/social-icons.svg" type="image/svg+xml"></object>
     </div>
 
     <header>
         <nav class="navbar">
             <div class="nav-container">
-                <a href="#" class="logo">
+                <a href="#hero" class="logo">
                     <img src="assets/images/logo/dc-logo.svg" alt="Drive Collective" width="200" height="40">
                 </a>
                 <div class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
@@ -37,19 +37,34 @@
                     <a href="#features">Why Us</a>
                     <a href="#investors">Investors</a>
                     <a href="#contact">Contact</a>
-                    <button class="btn-primary">Book Now</button>
+                    <a href="#fleet" class="btn-primary">Book Now</a>
                 </div>
             </div>
         </nav>
     </header>
 
     <main>
-        <section class="hero" style="background-image: url('assets/images/backgrounds/hero-bg-vegas.svg')">
+        <section id="hero" class="hero" style="background-image: url('assets/images/backgrounds/hero-bg-vegas.svg')">
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h1>Premium Car Rentals</h1>
                 <p>Serving rideshare drivers and tourists with reliable, affordable vehicles</p>
-                <button class="btn-primary btn-large">View Available Vehicles</button>
+                <a href="#fleet" class="btn-primary btn-large">View Available Vehicles</a>
+            </div>
+        </section>
+
+        <section id="fleet" class="fleet">
+            <div class="section-container">
+                <h2>Our Fleet</h2>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All Vehicles</button>
+                    <button class="filter-btn" data-filter="rideshare">Rideshare</button>
+                    <button class="filter-btn" data-filter="tourist">Tourist</button>
+                    <button class="filter-btn" data-filter="luxury">Luxury</button>
+                </div>
+                <div class="car-grid" id="carGrid">
+                    <!-- Cars populated via JavaScript -->
+                </div>
             </div>
         </section>
 
@@ -88,7 +103,69 @@
             </div>
         </section>
 
-        <!-- Rest of sections remain the same until contact section -->
+        <section id="investors" class="investors">
+            <div class="section-container">
+                <h2>Investment Opportunity</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>Year 1 Revenue</h3>
+                        <div class="metric-value">$78,000</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Year 2 Revenue</h3>
+                        <div class="metric-value">$156,000</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Net Margin</h3>
+                        <div class="metric-value">30%</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Break-Even</h3>
+                        <div class="metric-value">Month 14</div>
+                    </div>
+                </div>
+
+                <div class="highlights-grid">
+                    <div class="highlight-card">
+                        <h3>Market Opportunity</h3>
+                        <p>Targeting $39.7B combined market in Las Vegas and South Dakota tourism/rideshare sectors</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3>Proven Model</h3>
+                        <p>Hybrid platform approach combining established marketplace (Turo) with proprietary booking system</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3>Strong Returns</h3>
+                        <p>Projected 85% ROI by Year 2 with clear path to profitability</p>
+                    </div>
+                </div>
+
+                <div class="investment-timeline">
+                    <div class="timeline-item">
+                        <h4>Q1 2025</h4>
+                        <p>Initial Fleet Launch<br>Platform Development</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Q2 2025</h4>
+                        <p>Market Expansion<br>Partnership Development</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Q3 2025</h4>
+                        <p>Platform Launch<br>Fleet Expansion</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Q4 2025</h4>
+                        <p>Market Optimization<br>Scale Operations</p>
+                    </div>
+                </div>
+
+                <div class="investment-cta">
+                    <h3>Investment Opportunity</h3>
+                    <p>Seeking $75,000 in exchange for 30% equity stake</p>
+                    <a href="#contact" class="btn-primary btn-large">Contact for Investment Details</a>
+                </div>
+            </div>
+        </section>
 
         <section id="contact" class="contact">
             <div class="section-container">
@@ -101,7 +178,7 @@
                             </svg>
                         </div>
                         <h3>Phone</h3>
-                        <p>(555) 123-4567</p>
+                        <p><a href="tel:+15551234567">(555) 123-4567</a></p>
                     </div>
                     <div class="contact-card">
                         <div class="icon">
@@ -110,7 +187,7 @@
                             </svg>
                         </div>
                         <h3>Email</h3>
-                        <p>info@drivecollective.com</p>
+                        <p><a href="mailto:info@drivecollective.com">info@drivecollective.com</a></p>
                     </div>
                     <div class="contact-card" id="locationAddress">
                         <div class="icon">
@@ -129,7 +206,9 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <img src="assets/images/logo/dc-logo.svg" alt="Drive Collective" class="footer-logo">
+                <a href="#hero">
+                    <img src="assets/images/logo/dc-logo.svg" alt="Drive Collective" class="footer-logo">
+                </a>
                 <p>Premium car rentals for rideshare and tourism</p>
             </div>
             <div class="footer-section">
@@ -140,17 +219,17 @@
             <div class="footer-section">
                 <h3>Connect</h3>
                 <div class="social-links">
-                    <a href="#" aria-label="Facebook">
+                    <a href="https://facebook.com/drivecollective" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                         <svg class="social-icon" width="24" height="24">
                             <use href="#icon-facebook"></use>
                         </svg>
                     </a>
-                    <a href="#" aria-label="Twitter">
+                    <a href="https://twitter.com/drivecollective" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                         <svg class="social-icon" width="24" height="24">
                             <use href="#icon-twitter"></use>
                         </svg>
                     </a>
-                    <a href="#" aria-label="Instagram">
+                    <a href="https://instagram.com/drivecollective" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <svg class="social-icon" width="24" height="24">
                             <use href="#icon-instagram"></use>
                         </svg>
@@ -163,6 +242,6 @@
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js" type="module"></script>
 </body>
 </html>
