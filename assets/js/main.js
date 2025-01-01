@@ -175,140 +175,160 @@ const locations = {
     }
 };
 
-// DOM Elements
-const locationSelect = document.getElementById('locationSelect');
-const carGrid = document.getElementById('carGrid');
-const locationAddress = document.getElementById('locationAddress');
-const navToggle = document.getElementById('navToggle');
-const navMenu = document.querySelector('.nav-menu');
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Cache DOM elements
+    const locationSelect = document.getElementById('locationSelect');
+    const carGrid = document.getElementById('carGrid');
+    const locationAddress = document.getElementById('locationAddress');
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    
+    // Mobile Navigation Toggle
+    navToggle?.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
 
-// Mobile Navigation Toggle
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-});
+    // Create card HTML helper function
+    function createCarCard(car) {
+        return `
+            <div class="car-card" data-tags="${car.tags.join(' ')}">
+                <div class="car-image">
+                    <img src="${car.image}" alt="${car.name}" loading="lazy">
+                    <div class="car-rating">
+                        <span class="star">★</span>
+                        <span>${car.rating}</span>
+                        <span class="trips">(${car.trips} trips)</span>
+                    </div>
+                    ${car.tags.includes('rideshare') ? 
+                        '<div class="rideshare-badge"><svg class="rideshare-icon" width="20" height="20"><use href="#icon-rideshare"></use></svg>Rideshare Ready</div>' 
+                        : ''}
+                </div>
+                
+                <div class="car-details">
+                    <h3 class="car-title">${car.name}</h3>
+                    
+                    <div class="car-specs">
+                        ${Object.entries(car.specifications).map(([key, value]) => `
+                            <div class="spec-item">
+                                <svg class="spec-icon" width="16" height="16">
+                                    <use href="#icon-${key.toLowerCase()}"></use>
+                                </svg>
+                                <span>${value}</span>
+                            </div>
+                        `).join('')}
+                    </div>
 
-// Update content based on location
-function updateLocation(location) {
-    // Update car grid
-    carGrid.innerHTML = locations[location].cars.map(car => `
-        <div class="car-card">
-            <img src="${car.image}" alt="${car.name}" class="car-image">
-            <div class="car-details">
-                <div class="car-header">
-                    <div>
-                        <h3 class="car-title">${car.name}</h3>
-                        <div class="car-rating">
-                            <span class="star">★</span>
-                            <span>${car.rating}</span>
-                            <span class="car-trips">(${car.trips} trips)</span>
-                        </div>
+                    <div class="car-features">
+                        ${car.features.slice(0, 4).map(feature => 
+                            `<span class="feature-tag">${feature}</span>`
+                        ).join('')}
+                    </div>
+
+                    <div class="car-price">
+                        <span class="amount">$${car.price}</span>
+                        <span class="period">/day</span>
+                    </div>
+
+                    <div class="car-guidelines">
+                        <h4>Trip Guidelines</h4>
+                        <ul>
+                            ${car.guidelines.map(guideline => 
+                                `<li>${guideline}</li>`
+                            ).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="car-extras">
+                        <h4>Available Extras</h4>
+                        ${car.extras.map(extra => `
+                            <div class="extra-item">
+                                <span>${extra.name}</span>
+                                <span class="extra-price">$${extra.price}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="car-actions">
+                        <button class="btn-primary">Book Now</button>
+                        <button class="btn-secondary">View Details</button>
                     </div>
                 </div>
-
-                <div class="car-features">
-                    ${car.tags.map(tag => `
-                        <span class="feature-tag">${tag}</span>
-                    `).join('')}
-                </div>
-
-                <div class="car-specs">
-                    ${Object.entries(car.specifications).map(([key, value]) => `
-                        <div class="spec-item">
-                            <div class="spec-label">${key}</div>
-                            <div class="spec-value">${value}</div>
-                        </div>
-                    `).join('')}
-                </div>
-
-                <p class="car-price">$${car.price}<span>/day</span></p>
-
-                <div class="car-features">
-                    ${car.features.slice(0, 4).map(feature => `
-                        <span class="feature-tag">${feature}</span>
-                    `).join('')}
-                </div>
-
-                <div class="car-guidelines">
-                    <h4>Trip Guidelines</h4>
-                    <ul>
-                        ${car.guidelines.map(guideline => `
-                            <li>${guideline}</li>
-                        `).join('')}
-                    </ul>
-                </div>
-
-                <div class="car-extras">
-                    <h4>Extras Available</h4>
-                    ${car.extras.map(extra => `
-                        <div class="extra-item">
-                            <span>${extra.name}</span>
-                            <span class="extra-price">$${extra.price}</span>
-                        </div>
-                    `).join('')}
-                </div>
-
-                <button class="btn-primary">Book Now</button>
             </div>
-        </div>
-    `).join('');
+        `;
+    }
 
-    // Update address
-    locationAddress.querySelector('p').textContent = locations[location].address;
-}
-
-// Location change event listener
-locationSelect.addEventListener('change', (e) => {
-    updateLocation(e.target.value);
-});
-
-// Initialize with default location
-updateLocation('las-vegas');
-
-// Add filter functionality
-const filterButtons = document.querySelectorAll('.filter-btn');
-filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const filter = button.dataset.filter;
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
+    // Update location content
+    function updateLocation(location) {
+        const locationData = locations[location];
         
+        // Update car grid
+        if (carGrid) {
+            carGrid.innerHTML = locationData.cars.map(createCarCard).join('');
+        }
+
+        // Update location address
+        if (locationAddress) {
+            const addressText = locationAddress.querySelector('p');
+            if (addressText) {
+                addressText.textContent = locationData.address;
+            }
+        }
+    }
+
+    // Filter functionality
+    function handleFilter(filter) {
         const cards = document.querySelectorAll('.car-card');
         cards.forEach(card => {
-            if (filter === 'all') {
-                card.style.display = 'block';
-            } else {
-                const tags = card.querySelector('.car-features').textContent.toLowerCase();
-                card.style.display = tags.includes(filter) ? 'block' : 'none';
-            }
+            const tags = card.dataset.tags;
+            card.style.display = (filter === 'all' || tags.includes(filter)) ? 'block' : 'none';
+        });
+    }
+
+    // Event Listeners
+    locationSelect?.addEventListener('change', (e) => {
+        updateLocation(e.target.value);
+    });
+
+    filterButtons?.forEach(button => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            handleFilter(button.dataset.filter);
         });
     });
-});
 
-// Investment CTA Button Handler
-document.querySelector('.investment-cta .btn-primary').addEventListener('click', () => {
-    const contactSection = document.getElementById('contact');
-    contactSection.scrollIntoView({ behavior: 'smooth' });
-});
-
-// Animate metrics on scroll
-const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.1
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
+    // Investment CTA functionality
+    const investmentCTA = document.querySelector('.investment-cta .btn-primary');
+    investmentCTA?.addEventListener('click', () => {
+        const contactSection = document.getElementById('contact');
+        contactSection?.scrollIntoView({ behavior: 'smooth' });
     });
-}, observerOptions);
 
-document.querySelectorAll('.metric-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(20px)';
-    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(card);
+    // Metrics animation
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.metric-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(card);
+    });
+
+    // Initialize with default location
+    updateLocation('las-vegas');
 });

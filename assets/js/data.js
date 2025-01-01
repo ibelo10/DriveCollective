@@ -1,0 +1,67 @@
+// assets/js/data.js
+export const fleetData = [
+    {
+        id: 1,
+        make: 'Toyota',
+        model: 'Camry',
+        year: 2023,
+        category: 'rideshare',
+        isRideshareEligible: true,
+        imageUrl: 'assets/images/vehicles/camry.jpg',
+        seats: 5,
+        transmission: 'Automatic',
+        fuelType: 'Hybrid',
+        features: ['Bluetooth', 'Backup Camera', 'Apple CarPlay', 'Android Auto'],
+        dailyRate: 59,
+        weeklyRate: 350,
+        description: 'Perfect for rideshare with excellent fuel economy'
+    },
+    {
+        id: 2,
+        make: 'Honda',
+        model: 'CR-V',
+        year: 2023,
+        category: 'tourist',
+        isRideshareEligible: false,
+        imageUrl: 'assets/images/vehicles/cr-v.jpg',
+        seats: 5,
+        transmission: 'Automatic',
+        fuelType: 'Gas',
+        features: ['SUV', 'Spacious Cargo', 'Roof Rack', 'Navigation'],
+        dailyRate: 69,
+        weeklyRate: 420,
+        description: 'Ideal for family trips and outdoor adventures'
+    },
+    {
+        id: 3,
+        make: 'Tesla',
+        model: 'Model 3',
+        year: 2023,
+        category: 'rideshare',
+        isRideshareEligible: true,
+        imageUrl: 'assets/images/vehicles/model-3.jpg',
+        seats: 5,
+        transmission: 'Electric',
+        fuelType: 'Electric',
+        features: ['Autopilot', 'Premium Sound', 'All-Electric', 'Free Charging'],
+        dailyRate: 89,
+        weeklyRate: 550,
+        description: 'Luxury electric vehicle perfect for eco-conscious riders'
+    },
+    {
+        id: 4,
+        make: 'Jeep',
+        model: 'Wrangler',
+        year: 2023,
+        category: 'tourist',
+        isRideshareEligible: false,
+        imageUrl: 'assets/images/vehicles/wrangler.jpg',
+        seats: 4,
+        transmission: 'Automatic',
+        fuelType: 'Gas',
+        features: ['4x4', 'Removable Top', 'Off-Road Ready', 'Bluetooth'],
+        dailyRate: 79,
+        weeklyRate: 480,
+        description: 'Adventure-ready 4x4 for exploring the outdoors'
+    }
+];
