@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drive Collective - Premium Car Rentals</title>
+    <meta name="description" content="Premium car rentals for rideshare drivers and tourists in Las Vegas and South Dakota">
     <link rel="stylesheet" href="assets/css/normalize.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -11,14 +12,16 @@
     <header>
         <nav class="navbar">
             <div class="nav-container">
-                <a href="#" class="logo">Drive Collective</a>
-                <div class="nav-toggle" id="navToggle">
+                <a href="#" class="logo">
+                    <img src="assets/images/logo/dc-logo.svg" alt="Drive Collective" width="200" height="40">
+                </a>
+                <div class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
                 <div class="nav-menu">
-                    <select id="locationSelect" class="location-select">
+                    <select id="locationSelect" class="location-select" aria-label="Select location">
                         <option value="las-vegas">Las Vegas, NV</option>
                         <option value="south-dakota">South Dakota</option>
                     </select>
@@ -34,143 +37,169 @@
 
     <main>
         <section class="hero">
+            <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h1>Premium Car Rentals</h1>
                 <p>Serving rideshare drivers and tourists with reliable, affordable vehicles</p>
-                <button class="btn-primary">View Available Vehicles</button>
+                <button class="btn-primary btn-large">View Available Vehicles</button>
             </div>
         </section>
 
         <section id="fleet" class="fleet">
-            <h2>Our Fleet</h2>
-            <div class="car-grid" id="carGrid">
-                <!-- Cars will be populated via JavaScript -->
+            <div class="section-container">
+                <h2>Our Fleet</h2>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">All Vehicles</button>
+                    <button class="filter-btn" data-filter="rideshare">Rideshare</button>
+                    <button class="filter-btn" data-filter="tourist">Tourist</button>
+                </div>
+                <div class="car-grid" id="carGrid">
+                    <!-- Cars populated via JavaScript -->
+                </div>
             </div>
         </section>
 
         <section id="features" class="features">
-            <h2>Why Choose Us</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="icon">🚗</div>
-                    <h3>Premium Fleet</h3>
-                    <p>Well-maintained vehicles perfect for rideshare and tourism</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">🕒</div>
-                    <h3>24/7 Support</h3>
-                    <p>Round-the-clock customer assistance</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">🛡️</div>
-                    <h3>Fully Insured</h3>
-                    <p>Comprehensive coverage for peace of mind</p>
+            <div class="section-container">
+                <h2>Why Choose Us</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon">
+                            <img src="assets/images/icons/car.svg" alt="Premium Fleet" width="60" height="60">
+                        </div>
+                        <h3>Premium Fleet</h3>
+                        <p>Well-maintained vehicles perfect for rideshare and tourism</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">
+                            <img src="assets/images/icons/support.svg" alt="24/7 Support" width="60" height="60">
+                        </div>
+                        <h3>24/7 Support</h3>
+                        <p>Round-the-clock customer assistance</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">
+                            <img src="assets/images/icons/shield.svg" alt="Fully Insured" width="60" height="60">
+                        </div>
+                        <h3>Fully Insured</h3>
+                        <p>Comprehensive coverage for peace of mind</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="investors" class="investors">
-            <h2>Investment Opportunity</h2>
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <h3>Year 1 Revenue</h3>
-                    <div class="metric-value">$78,000</div>
-                </div>
-                <div class="metric-card">
-                    <h3>Year 2 Revenue</h3>
-                    <div class="metric-value">$156,000</div>
-                </div>
-                <div class="metric-card">
-                    <h3>Net Margin</h3>
-                    <div class="metric-value">30%</div>
-                </div>
-                <div class="metric-card">
-                    <h3>Break-Even</h3>
-                    <div class="metric-value">Month 14</div>
-                </div>
-            </div>
-
-            <div class="highlights-grid">
-                <div class="highlight-card">
-                    <h3>Market Opportunity</h3>
-                    <p>Targeting $39.7B combined market in Las Vegas and South Dakota tourism/rideshare sectors</p>
-                </div>
-                <div class="highlight-card">
-                    <h3>Proven Model</h3>
-                    <p>Hybrid platform approach combining established marketplace (Turo) with proprietary booking system</p>
-                </div>
-                <div class="highlight-card">
-                    <h3>Strong Returns</h3>
-                    <p>Projected 85% ROI by Year 2 with clear path to profitability</p>
-                </div>
-            </div>
-
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h4>Q1 2025</h4>
-                    <p>Initial Fleet Launch<br>Platform Development</p>
-                </div>
-                <div class="timeline-item">
-                    <h4>Q2 2025</h4>
-                    <p>Market Expansion<br>Partnership Development</p>
-                </div>
-                <div class="timeline-item">
-                    <h4>Q3 2025</h4>
-                    <p>Platform Launch<br>Fleet Expansion</p>
-                </div>
-                <div class="timeline-item">
-                    <h4>Q4 2025</h4>
-                    <p>Market Optimization<br>Scale Operations</p>
-                </div>
-            </div>
-
-            <div class="investment-structure">
-                <div class="structure-grid">
-                    <div class="structure-card">
-                        <h3>Use of Funds</h3>
-                        <ul>
-                            <li>Vehicle Acquisition: $60,000</li>
-                            <li>Operations Setup: $10,000</li>
-                            <li>Technology Investment: $15,000</li>
-                            <li>Marketing Launch: $5,000</li>
-                        </ul>
+            <div class="section-container">
+                <h2>Investment Opportunity</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>Year 1 Revenue</h3>
+                        <div class="metric-value">$78,000</div>
                     </div>
-                    <div class="structure-card">
-                        <h3>Return Potential</h3>
-                        <ul>
-                            <li>Year 1 ROI: 31%</li>
-                            <li>Year 2 ROI: 85%</li>
-                            <li>Exit Multiple: 2.5-3x EBITDA</li>
-                            <li>Projected Exit Value: $250,000</li>
-                        </ul>
+                    <div class="metric-card">
+                        <h3>Year 2 Revenue</h3>
+                        <div class="metric-value">$156,000</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Net Margin</h3>
+                        <div class="metric-value">30%</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Break-Even</h3>
+                        <div class="metric-value">Month 14</div>
                     </div>
                 </div>
-            </div>
 
-            <div class="investment-cta">
-                <h3>Investment Opportunity</h3>
-                <p>Seeking $75,000 in exchange for 30% equity stake</p>
-                <button class="btn-primary">Contact for Investment Details</button>
+                <div class="highlights-grid">
+                    <div class="highlight-card">
+                        <h3>Market Opportunity</h3>
+                        <p>Targeting $39.7B combined market in Las Vegas and South Dakota tourism/rideshare sectors</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3>Proven Model</h3>
+                        <p>Hybrid platform approach combining established marketplace (Turo) with proprietary booking system</p>
+                    </div>
+                    <div class="highlight-card">
+                        <h3>Strong Returns</h3>
+                        <p>Projected 85% ROI by Year 2 with clear path to profitability</p>
+                    </div>
+                </div>
+
+                <div class="investment-timeline">
+                    <div class="timeline-item">
+                        <h4>Q1 2025</h4>
+                        <p>Initial Fleet Launch<br>Platform Development</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Q2 2025</h4>
+                        <p>Market Expansion<br>Partnership Development</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Q3 2025</h4>
+                        <p>Platform Launch<br>Fleet Expansion</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Q4 2025</h4>
+                        <p>Market Optimization<br>Scale Operations</p>
+                    </div>
+                </div>
+
+                <div class="investment-structure">
+                    <div class="structure-grid">
+                        <div class="structure-card">
+                            <h3>Use of Funds</h3>
+                            <ul>
+                                <li>Vehicle Acquisition: $60,000</li>
+                                <li>Operations Setup: $10,000</li>
+                                <li>Technology Investment: $15,000</li>
+                                <li>Marketing Launch: $5,000</li>
+                            </ul>
+                        </div>
+                        <div class="structure-card">
+                            <h3>Return Potential</h3>
+                            <ul>
+                                <li>Year 1 ROI: 31%</li>
+                                <li>Year 2 ROI: 85%</li>
+                                <li>Exit Multiple: 2.5-3x EBITDA</li>
+                                <li>Projected Exit Value: $250,000</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="investment-cta">
+                    <h3>Investment Opportunity</h3>
+                    <p>Seeking $75,000 in exchange for 30% equity stake</p>
+                    <button class="btn-primary btn-large">Contact for Investment Details</button>
+                </div>
             </div>
         </section>
 
         <section id="contact" class="contact">
-            <h2>Contact Us</h2>
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <div class="icon">📱</div>
-                    <h3>Phone</h3>
-                    <p>(555) 123-4567</p>
-                </div>
-                <div class="contact-card">
-                    <div class="icon">📧</div>
-                    <h3>Email</h3>
-                    <p>info@drivecollective.com</p>
-                </div>
-                <div class="contact-card" id="locationAddress">
-                    <div class="icon">📍</div>
-                    <h3>Location</h3>
-                    <p>Las Vegas, NV</p>
+            <div class="section-container">
+                <h2>Contact Us</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="icon">
+                            <img src="assets/images/icons/phone.svg" alt="Phone" width="40" height="40">
+                        </div>
+                        <h3>Phone</h3>
+                        <p>(555) 123-4567</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="icon">
+                            <img src="assets/images/icons/email.svg" alt="Email" width="40" height="40">
+                        </div>
+                        <h3>Email</h3>
+                        <p>info@drivecollective.com</p>
+                    </div>
+                    <div class="contact-card" id="locationAddress">
+                        <div class="icon">
+                            <img src="assets/images/icons/location.svg" alt="Location" width="40" height="40">
+                        </div>
+                        <h3>Location</h3>
+                        <p>Las Vegas, NV</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -179,7 +208,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Drive Collective LLC</h3>
+                <img src="assets/images/logo/dc-logo.svg" alt="Drive Collective" class="footer-logo">
                 <p>Premium car rentals for rideshare and tourism</p>
             </div>
             <div class="footer-section">
@@ -190,9 +219,15 @@
             <div class="footer-section">
                 <h3>Connect</h3>
                 <div class="social-links">
-                    <a href="#">Facebook</a>
-                    <a href="#">Twitter</a>
-                    <a href="#">Instagram</a>
+                    <a href="#" aria-label="Facebook">
+                        <img src="assets/images/icons/facebook.svg" alt="" width="24" height="24">
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <img src="assets/images/icons/twitter.svg" alt="" width="24" height="24">
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <img src="assets/images/icons/instagram.svg" alt="" width="24" height="24">
+                    </a>
                 </div>
             </div>
         </div>
