@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <!-- Phone Icon -->
+  <symbol id="icon-phone" viewBox="0 0 40 40">
+    <path d="M10 5 L20 15 C20 15 25 10 30 15 L25 35 C15 35 5 25 5 15 L10 5Z" fill="#2563eb"/>
+  </symbol>
+  
+  <!-- Email Icon -->
+  <symbol id="icon-email" viewBox="0 0 40 40">
+    <rect x="5" y="10" width="30" height="20" rx="2" fill="#2563eb"/>
+    <path d="M5 12 L20 25 L35 12" fill="none" stroke="#ffffff" stroke-width="2"/>
+  </symbol>
+  
+  <!-- Location Icon -->
+  <symbol id="icon-location" viewBox="0 0 40 40">
+    <path d="M20 5 C30 5 35 15 35 20 C35 30 20 35 20 35 C20 35 5 30 5 20 C5 15 10 5 20 5Z" fill="#2563eb"/>
+    <circle cx="20" cy="15" r="5" fill="#ffffff"/>
+  </symbol>
+</svg>
