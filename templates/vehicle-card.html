@@ -1,0 +1,366 @@
+<!-- Vehicle Card Template -->
+<!-- Usage: Copy this template and replace {{ variables }} with actual data -->
+
+<div class="car-card" data-id="{{ car.id }}">
+    <!-- Vehicle Image -->
+    <div class="car-image-container">
+        <img src="{{ car.image }}" alt="{{ car.name }}" class="car-image">
+        <div class="car-badges">
+            {{#if car.isNew}}
+            <span class="badge badge-new">New</span>
+            {{/if}}
+            {{#each car.tags}}
+            <span class="badge badge-tag">{{ this }}</span>
+            {{/each}}
+        </div>
+    </div>
+
+    <!-- Vehicle Details -->
+    <div class="car-details">
+        <!-- Header Section -->
+        <div class="car-header">
+            <div class="car-title-section">
+                <h3 class="car-title">{{ car.name }}</h3>
+                <div class="car-rating">
+                    <span class="star">★</span>
+                    <span class="rating-value">{{ car.rating }}</span>
+                    <span class="car-trips">({{ car.trips }} trips)</span>
+                </div>
+            </div>
+            <div class="car-price">
+                <span class="price-amount">${{ car.price }}</span>
+                <span class="price-period">/day</span>
+            </div>
+        </div>
+
+        <!-- Specifications Grid -->
+        <div class="car-specs">
+            <div class="spec-item">
+                <span class="spec-icon">⛽</span>
+                <div class="spec-details">
+                    <span class="spec-label">Fuel</span>
+                    <span class="spec-value">{{ car.specifications.fuelType }}</span>
+                </div>
+            </div>
+            <div class="spec-item">
+                <span class="spec-icon">💺</span>
+                <div class="spec-details">
+                    <span class="spec-label">Seats</span>
+                    <span class="spec-value">{{ car.specifications.seats }}</span>
+                </div>
+            </div>
+            <div class="spec-item">
+                <span class="spec-icon">🚪</span>
+                <div class="spec-details">
+                    <span class="spec-label">Doors</span>
+                    <span class="spec-value">{{ car.specifications.doors }}</span>
+                </div>
+            </div>
+            <div class="spec-item">
+                {{#if car.specifications.mpg}}
+                <span class="spec-icon">⚡</span>
+                <div class="spec-details">
+                    <span class="spec-label">MPG</span>
+                    <span class="spec-value">{{ car.specifications.mpg }}</span>
+                </div>
+                {{else}}
+                <span class="spec-icon">🔋</span>
+                <div class="spec-details">
+                    <span class="spec-label">Range</span>
+                    <span class="spec-value">{{ car.specifications.range }}</span>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="car-features">
+            <h4>Features</h4>
+            <div class="feature-grid">
+                {{#each car.features}}
+                <span class="feature-tag">{{ this }}</span>
+                {{/each}}
+            </div>
+        </div>
+
+        <!-- Guidelines Section -->
+        <div class="car-guidelines">
+            <h4>Trip Guidelines</h4>
+            <ul class="guidelines-list">
+                {{#each car.guidelines}}
+                <li class="guideline-item">{{ this }}</li>
+                {{/each}}
+            </ul>
+        </div>
+
+        <!-- Extras Section -->
+        <div class="car-extras">
+            <h4>Available Extras</h4>
+            <div class="extras-list">
+                {{#each car.extras}}
+                <div class="extra-item">
+                    <span class="extra-name">{{ this.name }}</span>
+                    <span class="extra-price">${{ this.price }}</span>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="car-actions">
+            <button class="btn-primary btn-book" data-car-id="{{ car.id }}">Book Now</button>
+            <button class="btn-secondary btn-details" data-car-id="{{ car.id }}">View Details</button>
+        </div>
+    </div>
+</div>
+
+<!-- Additional CSS for the template -->
+<style>
+    .car-card {
+        background: white;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .car-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .car-image-container {
+        position: relative;
+        width: 100%;
+        height: 250px;
+    }
+
+    .car-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .car-badges {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .badge-new {
+        background: var(--accent);
+        color: white;
+    }
+
+    .badge-tag {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--dark);
+    }
+
+    .car-details {
+        padding: 1.5rem;
+    }
+
+    .car-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+    }
+
+    .car-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .car-rating {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        color: var(--gray-700);
+    }
+
+    .star {
+        color: var(--warning);
+    }
+
+    .car-price {
+        text-align: right;
+    }
+
+    .price-amount {
+        font-size: 1.75rem;
+        font-weight: bold;
+        color: var(--accent);
+    }
+
+    .price-period {
+        font-size: 1rem;
+        color: var(--gray-600);
+    }
+
+    .car-specs {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin: 1.5rem 0;
+        padding: 1rem 0;
+        border-top: 1px solid var(--gray-200);
+        border-bottom: 1px solid var(--gray-200);
+    }
+
+    .spec-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .spec-icon {
+        font-size: 1.25rem;
+    }
+
+    .spec-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .spec-label {
+        font-size: 0.75rem;
+        color: var(--gray-600);
+    }
+
+    .spec-value {
+        font-weight: 500;
+    }
+
+    .car-features,
+    .car-guidelines,
+    .car-extras {
+        margin: 1.5rem 0;
+    }
+
+    .feature-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .feature-tag {
+        background: var(--gray-100);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        color: var(--gray-700);
+    }
+
+    .guidelines-list {
+        list-style: none;
+        padding: 0;
+        margin: 0.5rem 0;
+    }
+
+    .guideline-item {
+        padding: 0.5rem 0;
+        color: var(--gray-700);
+    }
+
+    .extras-list {
+        margin-top: 0.5rem;
+    }
+
+    .extra-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--gray-200);
+    }
+
+    .extra-item:last-child {
+        border-bottom: none;
+    }
+
+    .car-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .btn-secondary {
+        background: var(--gray-100);
+        color: var(--gray-800);
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background: var(--gray-200);
+    }
+
+    @media (max-width: 768px) {
+        .car-specs {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .car-actions {
+            flex-direction: column;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            width: 100%;
+        }
+    }
+</style>
+
+<!-- Example Usage:
+<script>
+    const carData = {
+        id: 1,
+        name: "Hyundai Elantra 2024",
+        image: "assets/images/vehicles/elantra.jpg",
+        price: 45,
+        rating: 4.9,
+        trips: 127,
+        isNew: true,
+        features: ["Bluetooth", "Apple CarPlay", "Backup camera", "Keyless entry"],
+        specifications: {
+            mpg: "35 combined",
+            doors: 4,
+            seats: 5,
+            fuelType: "Gas"
+        },
+        tags: ["rideshare", "tourist"],
+        guidelines: [
+            "No smoking",
+            "Pet friendly",
+            "Clean car upon return",
+            "Replace fuel used"
+        ],
+        extras: [
+            { name: "Prepaid refuel", price: 45 },
+            { name: "Unlimited miles", price: 30 },
+            { name: "Post-trip cleaning", price: 25 }
+        ]
+    };
+
+    // Use a template engine or string interpolation to populate the template
+    const template = document.querySelector('#vehicle-card-template');
+    const rendered = populateTemplate(template, carData);
+    document.querySelector('#carGrid').appendChild(rendered);
+</script>
+-->
